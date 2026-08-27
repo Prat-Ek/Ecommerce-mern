@@ -1,6 +1,7 @@
 "use client";
 
 import { useCart } from "@/lib/hook/useCart";
+import { useWishlist } from "@/lib/hook/useWishlist";
 import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -44,6 +45,7 @@ export default function ProductView({ product }: { product: Product }) {
   const discountedPrice =
     product.price * (1 - product.discountPercentage / 100);
     const {addToCart} = useCart();
+    const {addToWishlist} = useWishlist();
 
   const handleAddToCart = () => {
     addToCart({...product, quantity});
@@ -55,6 +57,20 @@ export default function ProductView({ product }: { product: Product }) {
       },
     });
   };
+
+  const handleAddToWishlist = () => {
+    addToWishlist({
+      id: product.id,
+      title: product.title,
+      price: product.price,
+      originalPrice: product.price,
+      rating: product.rating,
+      thumbnail: product.thumbnail,
+      discountPercentage: product.discountPercentage,
+    });
+    toast.success(`${product.title} added to wishlist`);
+  };
+  
 
   return (
     <section className="px-4 md:px-8 mt-6" aria-label="Product detail">
@@ -228,6 +244,7 @@ export default function ProductView({ product }: { product: Product }) {
           <div className="flex flex-wrap gap-4">
             <button
               type="button"
+              onClick={handleAddToWishlist}
               className="w-[45%] px-4 py-2.5 text-slate-900 text-sm font-semibold rounded-md cursor-pointer bg-white border border-slate-300 transition-colors hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
             >
               Add to wishlist

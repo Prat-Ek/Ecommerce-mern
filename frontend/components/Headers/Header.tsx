@@ -1,6 +1,7 @@
 "use client";
 
 import { useCart } from "@/lib/hook/useCart";
+import { useWishlist } from "@/lib/hook/useWishlist";
 import { ChevronDown, Heart, Menu, Search, ShoppingCart, User, X } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -33,6 +34,8 @@ export default  function Header({ categories }: HeaderProps) {
     0
   );
 
+  const {wishlist} = useWishlist();
+  const wishlistCount = wishlist.length;
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -119,7 +122,7 @@ export default  function Header({ categories }: HeaderProps) {
             >
               <Heart />
               <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white">
-                3
+              {wishlistCount}
               </span>
             </Link>
 
