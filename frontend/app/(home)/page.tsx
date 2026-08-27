@@ -14,7 +14,7 @@ export default async function page() {
       <Header categories={categories} />
       <Hero />
       <CategorySection />
-      <HomeProductList limit={6} />
+      <HomeProductList pageTitle="For You" limit={6} />
       <WhyUs/>
       <FeedBack/>
       <Footer/>

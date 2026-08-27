@@ -2,8 +2,10 @@
 import Link from "next/link";
 export type HomeProductListProps = {
   limit?: number;
+  pageTitle:string;
 };
 export default async function HomeProductList({
+  pageTitle,
   limit ,
 }: HomeProductListProps) {
   // dataa fetch
@@ -22,7 +24,7 @@ export default async function HomeProductList({
               id="products-heading"
               className="text-2xl font-bold text-slate-900"
             >
-              For you
+             {pageTitle}
             </h2>
             <p className="text-base text-slate-600 mt-4">
               Explore the most popular and high-performance laptops available
