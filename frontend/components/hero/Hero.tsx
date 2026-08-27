@@ -11,7 +11,7 @@ export default function Hero() {
             <div className="text-center text-white px-4 animate-fadeInUp">
                 <h1 className="text-4xl md:text-5xl font-bold mb-4">SUMMER SALE</h1>
                 <p className="text-xl mb-6">Up to 50% off on selected items</p>
-                <button className="bg-primary hover:bg-red-500 text-white px-8 py-3 rounded-full font-medium transition-colors duration-300">
+                <button className="bg-red-500 text-white px-8 py-3 rounded-full font-medium transition-colors duration-300">
                     SHOP NOW
                 </button>
             </div>

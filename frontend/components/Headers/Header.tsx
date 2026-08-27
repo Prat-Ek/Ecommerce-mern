@@ -1,28 +1,43 @@
 "use client";
 
-import { Heart, Menu, Search, ShoppingCart, User, X } from "lucide-react";
+import { useCart } from "@/lib/hook/useCart";
+import { ChevronDown, Heart, Menu, Search, ShoppingCart, User, X } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-const categories = [
-  "Electronics",
-  "Fashion",
-  "Home & Garden",
-  "Sports",
-  "Books",
-  "Beauty",
-];
+// const categories = [
+//   "Electronics",
+//   "Fashion",
+//   "Home & Garden",
+//   "Sports",
+//   "Books",
+//   "Beauty",
+// ];
+export type HeaderProps = {
+  categories: { name: string; slug: string }[];
+};
 
-export default function Header() {
+export default  function Header({ categories }: HeaderProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [isAccountOpen, setIsAccountOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  const router = useRouter();
+
+
+ const { cart } = useCart();
+  const cartCount = cart.reduce(
+    (total, item) => total + item.quantity,
+    0
+  );
+
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
+
     if (searchQuery.trim()) {
-      window.location.href = `/products?search=${encodeURIComponent(searchQuery.trim())}`;
+      router.push(`/products?search=${encodeURIComponent(searchQuery.trim())}`);
     }
   };
 
@@ -43,29 +58,34 @@ export default function Header() {
               onBlur={() => setTimeout(() => setIsCategoryOpen(false), 150)}
               className="flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium text-foreground hover:bg-gray-100 "
             >
-             <Menu className="h-4"/>
+              <Menu className="h-4" />
               Categories
-              <svg className={`h-3 w-3 transition-transform ${isCategoryOpen ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
+             <ChevronDown className="h-4" />
             </button>
             {isCategoryOpen && (
               <div className="absolute left-0 top-full z-50 mt-1 w-48 rounded-md bg-white py-1 shadow-lg">
-                {categories.map((cat) => (
+                {categories.map((cat: { name: string; slug: string }) => (
                   <Link
-                    key={cat}
-                    href={`/categories/${cat.toLowerCase().replace(/\s+/g, "-")}`}
+                    key={cat.slug}
+                    // href={`/category/${cat.toLowerCase().replace(/\s+/g, "-")}`}
+                    href={`/category/${cat.slug}`}
                     className="block px-4 py-2 text-sm text-foreground hover:bg-gray-100"
                   >
-                    {cat}
+                    {cat.name}
+                   
                   </Link>
                 ))}
+                 <Link href={'/products/categories'}
+                  className="block px-4 py-2 text-sm text-foreground hover:bg-gray-100">All Category</Link>
               </div>
             )}
           </div>
 
           {/* Search Bar */}
-          <form onSubmit={handleSearch} className="hidden flex-1 max-w-lg sm:block">
+          <form
+            onSubmit={handleSearch}
+            className="hidden flex-1 max-w-lg sm:block"
+          >
             <div className="relative">
               <input
                 type="text"
@@ -75,7 +95,6 @@ export default function Header() {
                 className="w-full rounded-full border border-gray-300 bg-gray-50 py-2 pl-10 pr-4 text-sm text-foreground placeholder-gray-400 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 "
               />
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
-             
             </div>
           </form>
 
@@ -90,7 +109,7 @@ export default function Header() {
                 q?.classList.toggle("hidden");
               }}
             >
-            <Search/>
+              <Search />
             </button>
 
             {/* Wishlist */}
@@ -98,7 +117,7 @@ export default function Header() {
               href="/wishlist"
               className="relative rounded-full p-2 text-foreground hover:bg-gray-100"
             >
-              <Heart/>
+              <Heart />
               <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white">
                 3
               </span>
@@ -110,9 +129,11 @@ export default function Header() {
               className="relative rounded-full p-2 text-foreground hover:bg-gray-100"
             >
               <ShoppingCart />
-              <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white">
-                5
-              </span>
+              {cartCount > 0 && (
+                <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white">
+                  {cartCount}
+                </span>
+              )}
             </Link>
 
             {/* Account */}
@@ -123,21 +144,33 @@ export default function Header() {
                 onBlur={() => setTimeout(() => setIsAccountOpen(false), 150)}
                 className="rounded-full p-2 text-foreground hover:bg-gray-100"
               >
-                 <User />
+                <User />
               </button>
               {isAccountOpen && (
                 <div className="absolute right-0 top-full z-50 mt-1 w-48 rounded-md bg-white py-1 shadow-lg">
-                  <Link href="/account" className="block px-4 py-2 text-sm text-foreground hover:bg-gray-100">
+                  <Link
+                    href="/account"
+                    className="block px-4 py-2 text-sm text-foreground hover:bg-gray-100"
+                  >
                     My Account
                   </Link>
-                  <Link href="/account/orders" className="block px-4 py-2 text-sm text-foreground hover:bg-gray-100">
+                  <Link
+                    href="/account/orders"
+                    className="block px-4 py-2 text-sm text-foreground hover:bg-gray-100"
+                  >
                     Orders
                   </Link>
-                  <Link href="/account/settings" className="block px-4 py-2 text-sm text-foreground hover:bg-gray-100">
+                  <Link
+                    href="/account/settings"
+                    className="block px-4 py-2 text-sm text-foreground hover:bg-gray-100"
+                  >
                     Settings
                   </Link>
                   <hr className="my-1 border-gray-200" />
-                  <button type="button" className="block w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-gray-100">
+                  <button
+                    type="button"
+                    className="block w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-gray-100"
+                  >
                     Sign Out
                   </button>
                 </div>
@@ -150,12 +183,7 @@ export default function Header() {
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="rounded-full p-2 text-foreground hover:bg-gray-100 md:hidden"
             >
-             
-                {isMobileMenuOpen ? (
-                 <X />
-                ) : (
-                   <Menu />
-                )}
+              {isMobileMenuOpen ? <X /> : <Menu />}
             </button>
           </div>
         </div>
@@ -171,7 +199,7 @@ export default function Header() {
                 placeholder="Search products..."
                 className="w-full rounded-full border border-gray-300 bg-gray-50 py-2 pl-10 pr-4 text-sm text-foreground placeholder-gray-400 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 "
               />
-             <Search/>
+              <Search />
             </div>
           </form>
         </div>
@@ -180,14 +208,17 @@ export default function Header() {
         {isMobileMenuOpen && (
           <div className="border-t border-gray-200 pb-4 md:hidden">
             <div className="space-y-1 pt-2">
-              <p className="px-3 py-2 text-xs font-semibold uppercase text-gray-400">Categories</p>
-              {categories.map((cat) => (
+              <p className="px-3 py-2 text-xs font-semibold uppercase text-gray-400">
+                Categories
+              </p>
+              {categories.map((cat: { name: string; slug: string }) => (
                 <Link
-                  key={cat}
-                  href={`/categories/${cat.toLowerCase().replace(/\s+/g, "-")}`}
+                  key={cat.slug}
+                  // href={`/categories/${cat.toLowerCase().replace(/\s+/g, "-")}`}
+                  href={`/category/${cat.slug}`}
                   className="block px-3 py-2 text-sm text-foreground hover:bg-gray-100"
                 >
-                  {cat}
+                  {cat.name}
                 </Link>
               ))}
             </div>

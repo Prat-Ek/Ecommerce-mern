@@ -1,62 +1,12 @@
 import Link from "next/link";
 
-// const categories = [
-//    {
-//       id: 1,
-//       title: "Smart Phones",
-//        slug: "smartphones",
-//       offer: "Up to 40% off",
-//       img: "https://cdn.dummyjson.com/product-images/smartphones/iphone-5s/thumbnail.webp",
-//       alt: "Ethnic Collection clothing",
-//    },
-//    {
-//       id: 2,
-//       title: "Beauty",
-//        slug: "beauty",
-//       offer: "Fresh looks",
-//       img: "https://readymadeui.com/images/fashion-img-2.webp",
-//       alt: "Festive Styles outfits",
-//    },
-//    {
-//       id: 3,
-//       title: "Casual Wear",
-//        slug: "casual-wear",
-//       offer: "Up to 30% off",
-//       img: "https://readymadeui.com/images/fashion-img-7.webp",
-//       alt: "Casual Wear",
-//    },
-//    {
-//       id: 4,
-//       title: "Streetwear",
-//        slug: "streetwear",
-//       offer: "Exclusive styles",
-//       img: "https://readymadeui.com/images/fashion-img-4.webp",
-//       alt: "Streetwear collection",
-//    },
-//    {
-//       id: 5,
-//       title: "Winter Essentials",
-//        slug: "winter-essentials",
-//       offer: "Top picks for less",
-//       img: "https://readymadeui.com/images/fashion-img-5.webp",
-//       alt: "Winter Essentials",
-//    },
-//    {
-//       id: 6,
-//       title: "Summer Collection",
-//        slug: "summer-collection",
-//       offer: "Shop & save 40%",
-//       img: "https://readymadeui.com/images/fashion-img-6.webp",
-//       alt: "Summer Collection",
-//    }
-// ];
 
 export default async function CategorySection() {
   const resposne = await fetch(
     "https://dummyjson.com/products/categories",
   );
   const categories = await resposne.json();
-  const sixCategories = categories.slice(0, 6);
+  //const sixCategories = categories.slice(0, 6);
 
   return (
     <section className="mt-6 px-4 md:px-8" aria-labelledby="category-heading">
@@ -65,11 +15,11 @@ export default async function CategorySection() {
           id="category-heading"
           className="text-2xl font-bold text-slate-900 mb-8"
         >
-          Top Categories
+          All Categories
         </h2>
 
         <ul className="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 sm:gap-6">
-          {sixCategories.map(
+          {categories.map(
             (category: {
               slug: string;
               name: string;
