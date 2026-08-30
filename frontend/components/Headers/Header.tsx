@@ -83,6 +83,9 @@ export default  function Header({ categories }: HeaderProps) {
               </div>
             )}
           </div>
+         
+            
+         
 
           {/* Search Bar */}
           <form

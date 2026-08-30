@@ -2,7 +2,8 @@
 
 import { useCart } from "@/lib/hook/useCart";
 import { CartItem as CartItemType } from "@/lib/context/CartContext";
-
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 const SHIPPING = 4.0;
 const TAX = 4.0;
 
@@ -121,6 +122,7 @@ function CartItem({
 export default function ShoppingCart() {
   const { cart, removeFromCart, increaseQuantity, decreaseQuantity } =
     useCart();
+    const router = useRouter();
 
   const handleQuantityChange = (id: number, newQty: number) => {
     if (newQty < 1) {
@@ -196,11 +198,13 @@ export default function ShoppingCart() {
                 </li>
               </ul>
               <button
-                type="button"
-                className="mt-6 w-full px-4 py-2.5 text-white text-sm font-semibold rounded-md cursor-pointer bg-blue-600 hover:bg-blue-700 border border-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                type="submit"
+                onClick={() => router.push("/checkout")}
+                className="mt-6 w-full px-4 py-2.5 text-white text-sm font-semibold rounded-md cursor-pointer bg-red-500 hover:bg-red-700 border border-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
               >
                 Proceed to Checkout
               </button>
+              <Link href={"/products"} className="mt-5 flex items-center justify-center hover:text-red-500">Continue to shopping</Link>
             </div>
 
             {/* Payment Methods */}

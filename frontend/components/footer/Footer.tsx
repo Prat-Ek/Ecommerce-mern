@@ -13,9 +13,9 @@ export default function Footer() {
             <div>
                 <h4 className="font-semibold text-lg mb-4">Quick Links</h4>
                 <ul className="space-y-2">
-                    <li><Link href="/home" className="text-gray-400 hover:text-white transition-colors duration-300">Home</Link></li>
+                    <li><Link href="/" className="text-gray-400 hover:text-white transition-colors duration-300">Home</Link></li>
                     <li><Link href="/about" className="text-gray-400 hover:text-white transition-colors duration-300">About Us</Link></li>
-                    <li><Link href="/shop" className="text-gray-400 hover:text-white transition-colors duration-300">Shop</Link></li>
+                    <li><Link href="/products" className="text-gray-400 hover:text-white transition-colors duration-300">Shop</Link></li>
                     <li><Link href="/contact" className="text-gray-400 hover:text-white transition-colors duration-300">Contact</Link></li>
                 </ul>
             </div>
@@ -44,7 +44,7 @@ export default function Footer() {
             </div>
         </div>
         <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2025 FASHIONHUB. All rights reserved.</p>
+            <p>&copy; 2025 SHOPHUB. All rights reserved.</p>
         </div>
     </footer>
   )

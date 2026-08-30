@@ -11,7 +11,7 @@ export default async function page() {
 
   return (
     <>
-      <Header categories={categories} />
+      {/* <Header categories={categories} /> */}
       <Hero />
       <CategorySection />
       <HomeProductList pageTitle="For You" limit={6} />

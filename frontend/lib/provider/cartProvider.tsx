@@ -1,9 +1,28 @@
 'use client'
-import { BaseSyntheticEvent, ReactNode, useState } from "react";
+import { BaseSyntheticEvent, ReactNode, useEffect, useState } from "react";
 import { CartContext, CartItem } from "../context/CartContext";
 
 export default function CartProvider({children}:Readonly<{children:ReactNode}>) {
-  const [cart, setCart] = useState<CartItem[]>([])
+  const [cart, setCart] = useState<CartItem[]>([]);
+
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem("cart");
+      if (stored) {
+        setCart(JSON.parse(stored));
+      }
+    } catch {
+      // ignore malformed storage
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem("cart", JSON.stringify(cart));
+    } catch {
+      // ignore storage errors
+    }
+  }, [cart]);
 
   const addToCart = (item: CartItem, e?: BaseSyntheticEvent) => {
     e?.preventDefault();

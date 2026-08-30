@@ -3,6 +3,7 @@
 import { useCart } from "@/lib/hook/useCart";
 import { useWishlist } from "@/lib/hook/useWishlist";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -42,6 +43,8 @@ export default function ProductView({ product }: { product: Product }) {
   const [mainImage, setMainImage] = useState(product.thumbnail);
   const [quantity, setQuantity] = useState(1);
 
+  const router = useRouter();
+
   const discountedPrice =
     product.price * (1 - product.discountPercentage / 100);
     const {addToCart} = useCart();
@@ -53,7 +56,7 @@ export default function ProductView({ product }: { product: Product }) {
       description: `${quantity} × $${discountedPrice.toFixed(2)}`,
       action: {
         label: "View cart",
-        onClick: () => (window.location.href = "/cart"),
+        onClick: () => router.push("/cart"),
       },
     });
   };
