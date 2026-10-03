@@ -6,6 +6,7 @@ import CartProvider from "@/lib/provider/cartProvider";
 import WishlistProvider from "@/lib/provider/wishlistProvider";
 import Header from "@/components/Headers/Header";
 import { HeaderService } from "@/lib/services/HeaderService";
+import AuthProvider from "@/lib/provider/AuthProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,6 +32,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <AuthProvider>
         <WishlistProvider>
           <CartProvider>
             <Header categories={categories}/>
@@ -38,6 +40,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
             <Toaster richColors position="top-right" />
           </CartProvider>
         </WishlistProvider>
+        </AuthProvider>
         </body>
     </html>
   );

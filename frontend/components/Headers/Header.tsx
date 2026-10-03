@@ -173,12 +173,13 @@ export default  function Header({ categories }: HeaderProps) {
                     Settings
                   </Link>
                   <hr className="my-1 border-gray-200" />
-                  <button
+                  <Link 
+                  href={"/login"}
                     type="button"
                     className="block w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-gray-100"
                   >
-                    Sign Out
-                  </button>
+                    Sign In
+                  </Link>
                 </div>
               )}
             </div>

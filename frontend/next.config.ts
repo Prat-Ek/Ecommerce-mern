@@ -5,10 +5,18 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "https",
+         protocol: "https",
+        hostname: "dummyjson.com",
+      },
+      {
+         protocol: "https",
         hostname: "cdn.dummyjson.com",
       },
+      {
+        hostname: "localhost:9005",
+      },
     ],
+    unoptimized:true,
   },
 };
 

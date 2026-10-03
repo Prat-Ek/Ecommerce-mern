@@ -1,3 +1,4 @@
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import HomeProductList from "./HomeProduct";
 
 
@@ -7,9 +8,7 @@ export default function page() {
    <HomeProductList pageTitle="All Products"/>
    <div className="flex items-center justify-center gap-2 m-10">
     <button type="button" aria-label="Previous" className="mr-4">
-        <svg width="9" height="16" viewBox="0 0 12 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M11 1L2 9.24242L11 17" stroke="#111820" stroke-opacity="0.7" stroke-width="2" stroke-linecap="round"/>
-        </svg>
+         <ChevronLeft />
     </button>
 
     <div className="flex gap-2 text-gray-500 text-sm md:text-base">
@@ -22,9 +21,7 @@ export default function page() {
     </div>
 
     <button type="button" aria-label="Next" className="ml-4">
-        <svg width="9" height="16" viewBox="0 0 12 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1 1L10 9.24242L1 17" stroke="#111820" stroke-opacity="0.7" stroke-width="2" stroke-linecap="round"/>
-        </svg>
+         <ChevronRight />
     </button>
 </div>
  </>

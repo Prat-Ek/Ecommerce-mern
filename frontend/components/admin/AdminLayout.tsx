@@ -1,8 +1,16 @@
-import React from 'react'
+'use client'
+import React, { useEffect } from 'react'
 import AdminHeader from '../Headers/AdminHeader'
 import AdminSidebar from '../sidebar/AdminSidebar'
+import { useAuth } from '@/lib/hook/useAuth'
+import { useRouter } from 'next/navigation'
 
 export default function AdminLayout({children}: {children: React.ReactNode}) {
+  // const router  = useRouter()
+  // const {loggedInUser}= useAuth()
+
+  
+  // if (loggedInUser){
   return (
      <section className="w-full h-screen flex flex-col">
         <AdminHeader />
@@ -20,4 +28,10 @@ export default function AdminLayout({children}: {children: React.ReactNode}) {
         </footer>
       </section>
   )
+//}
+// else {
+// useEffect(()=>{
+//   return router.push("/login")
+// },[])
+// }
 }

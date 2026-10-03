@@ -1,7 +1,9 @@
 "use client";
 
+import { useAuth } from "@/lib/hook/useAuth";
 import {
   Bell,
+  ChevronDown,
   ExternalLink,
   LayoutDashboard,
   LogOut,
@@ -12,7 +14,9 @@ import {
   User,
   X,
 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const notifications = [
@@ -22,6 +26,17 @@ const notifications = [
 ];
 
 export default function AdminHeader() {
+  const router = useRouter()
+  const {loggedInUser} = useAuth()
+  console.log ({loggedInUser})
+  const { logout } = useAuth();
+
+  const handleLogout = async () => {
+    if (!loggedInUser) return;
+    await logout();
+   router.push("/")
+  };
+
   const [searchQuery, setSearchQuery] = useState("");
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
@@ -143,25 +158,23 @@ export default function AdminHeader() {
                 onBlur={() => setTimeout(() => setIsProfileOpen(false), 200)}
                 className="flex items-center gap-2 rounded-full p-1 pr-2 text-foreground hover:bg-gray-100"
               >
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 text-sm font-medium text-white">
-                  A
-                </span>
-                <span className="hidden text-sm font-medium md:block">Admin</span>
-                <svg
-                  className={`h-3 w-3 transition-transform ${isProfileOpen ? "rotate-180" : ""}`}
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
+                <Image
+                crossOrigin="anonymous"
+                  src={loggedInUser?.image?.url || "/default-avatar.png"}
+                  alt={loggedInUser?.username || "Admin user"}
+                  width={32}
+                  height={32}
+                  className="h-8 w-8 rounded-full object-cover"
+                />
+                <span className="hidden text-sm font-medium md:block">{loggedInUser?.username}</span>
+                 <ChevronDown/>
               </button>
 
               {isProfileOpen && (
                 <div className="absolute right-0 top-full z-50 mt-1 w-56 rounded-md bg-white py-1 shadow-lg">
                   <div className="border-b border-gray-100 px-4 py-3">
-                    <p className="text-sm font-semibold text-foreground">Admin User</p>
-                    <p className="text-xs text-gray-400">admin@example.com</p>
+                    <p className="text-sm font-semibold text-foreground">{`${loggedInUser?.firstName} ${loggedInUser?.lastName}`}</p>
+                    <p className="text-xs text-gray-400">{loggedInUser?.email}</p>
                   </div>
                   {/* <Link
                     href="/admin"
@@ -186,7 +199,8 @@ export default function AdminHeader() {
                   </Link>
                   <hr className="my-1 border-gray-200" />
                   <button
-                    type="button"
+                  onClick={handleLogout}
+                    type="submit"
                     className="flex w-full items-center gap-2 px-4 py-2 text-left text-sm text-red-600 hover:bg-gray-100"
                   >
                     <LogOut className="h-4 w-4" />

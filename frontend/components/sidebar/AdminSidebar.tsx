@@ -1,9 +1,10 @@
-import Link from 'next/link'
-import React from 'react'
+'use client'
 import { IAdminMenuFeature } from './IAdminMenuFeature'
 import { Icon } from '@iconify/react';
 import { SingleMenuItem } from './SingleMenuItem';
-
+import { useAuth } from '@/lib/hook/useAuth';
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/navigation';
 const adminFeatures: Array<IAdminMenuFeature> = [
   {
     icon: <Icon icon={"hugeicons:home-07"} />,
@@ -73,6 +74,11 @@ const adminFeatures: Array<IAdminMenuFeature> = [
 ];
 
 export default function AdminSidebar() {
+  const router = useRouter()
+ const logout =()=>{
+  Cookies.remove ("auAc_59")
+  router.push('/login')
+ }
   return (
     <>
    <aside className="hidden lg:block lg:w-1/5 bg-gray-200 p-7">
@@ -84,7 +90,8 @@ export default function AdminSidebar() {
         </ul>
         <li className="w-full sticky bottom-0 bg-white rounded-md p-3 my-3 flex gap-3 items-center">
          
-          <button  >{"Logout"}</button>
+          <button onClick={logout}
+            >{"Logout"}</button>
         </li>
       </aside></>
   )
